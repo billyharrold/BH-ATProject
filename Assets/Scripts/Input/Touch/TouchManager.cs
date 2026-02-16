@@ -7,10 +7,20 @@ public class TouchManager : MonoBehaviour
     [SerializeField] private GameObject circle;
 
 
-   private PlayerInput playerInput;
+    [Header("Input")]
+    private PlayerInput playerInput;
+    private InputAction touchPositionAction;
+    private InputAction touchPressAction;
 
-   private InputAction touchPositionAction;
-   private InputAction touchPressAction;
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+
+    [Header("Spawnables")] public GameObject lavaBubbles;
+
+
+
+
+
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -36,7 +46,19 @@ public class TouchManager : MonoBehaviour
        position.z = 0f;
        //circle.transform.position = position;
 
+      PlayAudio();
 
+    }
 
+    private void PlayAudio()
+    {
+
+        if (audioSource == null || audioSource.clip == null)
+        {
+            Debug.LogWarning("AudioSource or clip is missing");
+            return;
+        }
+
+        audioSource.Play();
     }
 }
