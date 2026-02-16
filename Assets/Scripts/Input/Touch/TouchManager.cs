@@ -34,7 +34,7 @@ public class TouchManager : MonoBehaviour
        Vector3 position = Camera.main.ScreenToWorldPoint(touchPositionAction.ReadValue<Vector2>());
        
        position.z = 0f;
-       circle.transform.position = position;
+       //circle.transform.position = position;
 
 
 
