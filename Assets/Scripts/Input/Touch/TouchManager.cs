@@ -4,6 +4,9 @@ using UnityEngine.InputSystem;
 
 public class TouchManager : MonoBehaviour
 {
+    [SerializeField] private GameObject circle;
+
+
    private PlayerInput playerInput;
 
    private InputAction touchPositionAction;
@@ -28,7 +31,12 @@ public class TouchManager : MonoBehaviour
 
     private void TouchPressed(InputAction.CallbackContext context)
     {
-        float value = context.ReadValue<float>();
-        Debug.Log(value);
+       Vector3 position = Camera.main.ScreenToWorldPoint(touchPositionAction.ReadValue<Vector2>());
+       
+       position.z = 0f;
+       circle.transform.position = position;
+
+
+
     }
 }
