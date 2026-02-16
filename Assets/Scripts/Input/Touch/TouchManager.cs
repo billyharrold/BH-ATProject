@@ -1,6 +1,9 @@
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
+using UnityEngine.EventSystems;
+
 
 public class TouchManager : MonoBehaviour
 {
@@ -14,9 +17,11 @@ public class TouchManager : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioRecorder audioRecorder;
 
     [Header("Spawnables")] public GameObject lavaBubbles;
 
+    
 
 
 
@@ -41,12 +46,27 @@ public class TouchManager : MonoBehaviour
 
     private void TouchPressed(InputAction.CallbackContext context)
     {
-       Vector3 position = Camera.main.ScreenToWorldPoint(touchPositionAction.ReadValue<Vector2>());
-       
-       position.z = 0f;
-       //circle.transform.position = position;
 
+        //if (IsTouchingUI())
+        //{
+        //    return;
+        //}
+
+        Vector2 touchPosition = touchPositionAction.ReadValue<Vector2>();
+
+        Vector3 position = new Vector3(touchPosition.x, touchPosition.y, 10f);
+
+        position = Camera.main.ScreenToWorldPoint(position);
+        position.z = 0f;
+
+
+       //circle.transform.position = position;
+       if (audioRecorder.isRecording)
+       {
+           return;
+       }
       PlayAudio();
+      SpawnLavaBubbles(position);
 
     }
 
@@ -60,5 +80,24 @@ public class TouchManager : MonoBehaviour
         }
 
         audioSource.Play();
+    }
+
+    private void SpawnLavaBubbles(Vector3 position)
+    {
+        Instantiate(lavaBubbles, position, Quaternion.identity);
+    }
+
+    private bool IsTouchingUI()
+    {
+        var uiModule = EventSystem.current.currentInputModule as InputSystemUIInputModule;
+
+        if (uiModule == null)
+        {
+            return false;
+        }
+
+        return uiModule.IsPointerOverGameObject(0);
+
+
     }
 }

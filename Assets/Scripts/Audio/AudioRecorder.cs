@@ -7,6 +7,10 @@ public class AudioRecorder : MonoBehaviour
 
     [SerializeField] AudioSource audioSource;
 
+    [SerializeField] int sampleLength = 3;
+
+    public bool isRecording = false;
+
     public void StartRecording()
     {
         //string device = Microphone.devices[0];
@@ -23,15 +27,22 @@ public class AudioRecorder : MonoBehaviour
         //    audioSource.clip = recordedAudioClip;
         //}
 
+        if (isRecording)
+        {
+            return;
+        }
+
         StartCoroutine(RecordAudio());
 
     }
 
     private IEnumerator RecordAudio()
     {
+        isRecording = true;
+
         string device = Microphone.devices[0];
         int sampleRate = 44100;
-        int sampleLength = 3;
+        //int sampleLength = 3;
 
         recordedAudioClip = Microphone.Start(device, false, sampleLength, sampleRate);
         //Debug.Log("Recording started");
@@ -40,6 +51,8 @@ public class AudioRecorder : MonoBehaviour
 
         Microphone.End(null);
         audioSource.clip = recordedAudioClip;
+
+        isRecording = false;
     }
 
     // Debug now I've condensed down the functions to 1 button
