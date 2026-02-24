@@ -32,6 +32,11 @@ public class BubbleRB : MonoBehaviour
         Vector2 moveForce = new Vector2(x * driftStrength, riseSpeed + y * driftStrength);
 
         rb.AddForce(moveForce, ForceMode2D.Force);
+
+        if (rb.position.y > 4)
+        {
+            moveForce = moveForce * -1f;
+        }
     }
 
 

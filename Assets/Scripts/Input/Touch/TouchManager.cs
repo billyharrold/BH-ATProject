@@ -47,10 +47,15 @@ public class TouchManager : MonoBehaviour
     private void TouchPressed(InputAction.CallbackContext context)
     {
 
-        //if (IsTouchingUI())
-        //{
-        //    return;
-        //}
+        if (IsTouchingUI())
+        {
+            return;
+        }
+
+        if (audioRecorder.isRecording)
+        {
+            return;
+        }
 
         Vector2 touchPosition = touchPositionAction.ReadValue<Vector2>();
 
@@ -61,10 +66,7 @@ public class TouchManager : MonoBehaviour
 
 
        //circle.transform.position = position;
-       if (audioRecorder.isRecording)
-       {
-           return;
-       }
+     
       PlayAudio();
       SpawnLavaBubbles(position);
 
@@ -89,15 +91,25 @@ public class TouchManager : MonoBehaviour
 
     private bool IsTouchingUI()
     {
-        var uiModule = EventSystem.current.currentInputModule as InputSystemUIInputModule;
-
-        if (uiModule == null)
+        if (EventSystem.current == null)
         {
             return false;
         }
 
-        return uiModule.IsPointerOverGameObject(0);
+        foreach (var touch in Touchscreen.current.touches)
+        {
+            if (touch.press.isPressed)
+            {
+                if (EventSystem.current.IsPointerOverGameObject(touch.touchId.ReadValue()))
+                {
+                    Debug.Log("Touching UI!");
+                    return true;
+                }
+            }
+        }
 
+       
 
+        return false;
     }
 }
