@@ -34,11 +34,6 @@ public class BubbleRB : MonoBehaviour
         rb.AddForce(moveForce, ForceMode2D.Force);
     }
 
-    //private void OnCollisionEnter2D(Collision2D other)
-    //{
-    //    if (other.collider.CompareTag("Walls")
-    //    { }
-    //}
 
     private void OnCollisionStay2D(Collision2D collision2D)
     {
