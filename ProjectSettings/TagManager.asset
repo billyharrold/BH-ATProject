@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 3
   tags:
   - Bubble
+  - Walls
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Bubble
   - Water
   - UI
   - 

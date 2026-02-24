@@ -32,7 +32,28 @@ public class BubbleRB : MonoBehaviour
         Vector2 moveForce = new Vector2(x * driftStrength, riseSpeed + y * driftStrength);
 
         rb.AddForce(moveForce, ForceMode2D.Force);
+    }
 
+    //private void OnCollisionEnter2D(Collision2D other)
+    //{
+    //    if (other.collider.CompareTag("Walls")
+    //    { }
+    //}
+
+    private void OnCollisionStay2D(Collision2D collision2D)
+    {
+        if (collision2D.collider.CompareTag("Bubble"))
+        {
+
+            Vector2 direction = (Vector2)(transform.position - collision2D.transform.position);
+
+            float distance = direction.magnitude;
+
+            if (distance > 0.01f)
+            {
+                rb.AddForce(direction.normalized * 0.2f, ForceMode2D.Force);
+            }
+        }
 
 
     }
