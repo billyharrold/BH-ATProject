@@ -85,5 +85,7 @@ public class Bubble : MonoBehaviour
         float noiseY = Mathf.PerlinNoise(0f, offset + Time.time * driftStrength);
 
         Vector2 direction = new Vector2(noiseX * 2f - 1f, noiseY * 2f - 1f);
+
+        transform.Translate(speed * Time.deltaTime * direction);
     }
 }
