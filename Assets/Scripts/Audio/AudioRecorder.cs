@@ -43,6 +43,7 @@ public class AudioRecorder : MonoBehaviour
     private IEnumerator RecordAudio()
     {
         isRecording = true;
+        Debug.Log(isRecording);
         recordButton.image.color = Color.red;
         string device = Microphone.devices[0];
         int sampleRate = 44100;

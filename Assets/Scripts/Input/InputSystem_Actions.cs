@@ -1107,6 +1107,24 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TouchDoubleTap"",
+                    ""type"": ""Button"",
+                    ""id"": ""fd50943b-3479-4591-8663-fea9c8b2ebe6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TouchDrag"",
+                    ""type"": ""Button"",
+                    ""id"": ""551beb19-d95a-4e65-b649-20369e00c825"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1140,6 +1158,28 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Touch"",
                     ""action"": ""TouchHold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7fdb1e5a-ad83-4cfe-a8b3-9c0a99921497"",
+                    ""path"": ""<Touchscreen>/Press"",
+                    ""interactions"": ""MultiTap"",
+                    ""processors"": """",
+                    ""groups"": "";Touch"",
+                    ""action"": ""TouchDoubleTap"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""80e46ace-17ed-494e-a638-8b478626b85b"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TouchDrag"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1237,6 +1277,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Touch_TouchPosition = m_Touch.FindAction("TouchPosition", throwIfNotFound: true);
         m_Touch_TouchPress = m_Touch.FindAction("TouchPress", throwIfNotFound: true);
         m_Touch_TouchHold = m_Touch.FindAction("TouchHold", throwIfNotFound: true);
+        m_Touch_TouchDoubleTap = m_Touch.FindAction("TouchDoubleTap", throwIfNotFound: true);
+        m_Touch_TouchDrag = m_Touch.FindAction("TouchDrag", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
@@ -1701,6 +1743,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Touch_TouchPosition;
     private readonly InputAction m_Touch_TouchPress;
     private readonly InputAction m_Touch_TouchHold;
+    private readonly InputAction m_Touch_TouchDoubleTap;
+    private readonly InputAction m_Touch_TouchDrag;
     /// <summary>
     /// Provides access to input actions defined in input action map "Touch".
     /// </summary>
@@ -1724,6 +1768,14 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Touch/TouchHold".
         /// </summary>
         public InputAction @TouchHold => m_Wrapper.m_Touch_TouchHold;
+        /// <summary>
+        /// Provides access to the underlying input action "Touch/TouchDoubleTap".
+        /// </summary>
+        public InputAction @TouchDoubleTap => m_Wrapper.m_Touch_TouchDoubleTap;
+        /// <summary>
+        /// Provides access to the underlying input action "Touch/TouchDrag".
+        /// </summary>
+        public InputAction @TouchDrag => m_Wrapper.m_Touch_TouchDrag;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1759,6 +1811,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @TouchHold.started += instance.OnTouchHold;
             @TouchHold.performed += instance.OnTouchHold;
             @TouchHold.canceled += instance.OnTouchHold;
+            @TouchDoubleTap.started += instance.OnTouchDoubleTap;
+            @TouchDoubleTap.performed += instance.OnTouchDoubleTap;
+            @TouchDoubleTap.canceled += instance.OnTouchDoubleTap;
+            @TouchDrag.started += instance.OnTouchDrag;
+            @TouchDrag.performed += instance.OnTouchDrag;
+            @TouchDrag.canceled += instance.OnTouchDrag;
         }
 
         /// <summary>
@@ -1779,6 +1837,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @TouchHold.started -= instance.OnTouchHold;
             @TouchHold.performed -= instance.OnTouchHold;
             @TouchHold.canceled -= instance.OnTouchHold;
+            @TouchDoubleTap.started -= instance.OnTouchDoubleTap;
+            @TouchDoubleTap.performed -= instance.OnTouchDoubleTap;
+            @TouchDoubleTap.canceled -= instance.OnTouchDoubleTap;
+            @TouchDrag.started -= instance.OnTouchDrag;
+            @TouchDrag.performed -= instance.OnTouchDrag;
+            @TouchDrag.canceled -= instance.OnTouchDrag;
         }
 
         /// <summary>
@@ -2054,5 +2118,19 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnTouchHold(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "TouchDoubleTap" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTouchDoubleTap(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "TouchDrag" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTouchDrag(InputAction.CallbackContext context);
     }
 }

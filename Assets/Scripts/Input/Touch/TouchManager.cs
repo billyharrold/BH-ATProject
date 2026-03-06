@@ -3,22 +3,27 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
+using UnityEngine.InputSystem.EnhancedTouch;
+using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 
 public class TouchManager : MonoBehaviour
 {
     [SerializeField] private GameObject circle;
 
+    
 
     [Header("Input")]
     private PlayerInput playerInput;
     private InputAction touchPositionAction;
     private InputAction touchPressAction;
     private InputAction touchHoldAction;
+    private InputAction touchDoubleTap;
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioRecorder audioRecorder;
+    public AudioRecorder audioRecorder;
 
     [Header("Spawnables")] public GameObject lavaBubbles;
 
@@ -33,25 +38,47 @@ public class TouchManager : MonoBehaviour
         touchPositionAction = playerInput.actions["TouchPosition"];
         touchPressAction = playerInput.actions["TouchPress"];
         touchHoldAction = playerInput.actions["TouchHold"];
+        touchDoubleTap = playerInput.actions["TouchDoubleTap"];
+
+        if (audioRecorder == null)
+        {
+            
+            audioRecorder = FindAnyObjectByType<AudioRecorder>();
+        }
+        
+
+      
     }
 
 
     private void OnEnable()
     {
+        EnhancedTouchSupport.Enable();
         touchPressAction.performed += TouchPressed;
         touchPressAction.canceled += TouchReleased;
     }
 
     private void OnDisable()
     {
+        EnhancedTouchSupport.Disable();
         touchPressAction.performed -= TouchPressed;
         touchPressAction.canceled -= TouchReleased;
     }
 
     private void TouchPressed(InputAction.CallbackContext context)
     {
+        Vector2 touchPosition = Vector2.zero;
+        if (Touch.activeTouches.Count > 0)
+        {
+            touchPosition = Touch.activeTouches[0].screenPosition;
+        }
+        else
+        {
+            touchPosition = touchPositionAction.ReadValue<Vector2>();
+        }
 
-        if (IsTouchingUI())
+
+        if (IsTouchingUI(touchPosition))
         {
             return;
         }
@@ -62,8 +89,9 @@ public class TouchManager : MonoBehaviour
         }
 
         isHolding = true;
+        PlayAudio(lowPitch: true);
 
-        Vector2 touchPosition = touchPositionAction.ReadValue<Vector2>();
+        //Vector2 touchPosition = touchPositionAction.ReadValue<Vector2>();
 
         Vector3 position = new Vector3(touchPosition.x, touchPosition.y, 10f);
 
@@ -71,10 +99,10 @@ public class TouchManager : MonoBehaviour
         position.z = 0f;
 
 
-       //circle.transform.position = position;
-     
-      PlayAudio(lowPitch: true);
-      SpawnLavaBubbles(position);
+        //circle.transform.position = position;
+
+
+        SpawnLavaBubbles(position);
 
     }
 
@@ -105,27 +133,22 @@ public class TouchManager : MonoBehaviour
         Instantiate(lavaBubbles, position, Quaternion.identity);
     }
 
-    private bool IsTouchingUI()
+    private bool IsTouchingUI(Vector2 screenPosition)
     {
-        if (EventSystem.current == null)
+       if (EventSystem.current == null)
         {
             return false;
         }
 
-        foreach (var touch in Touchscreen.current.touches)
+        PointerEventData eventData = new PointerEventData(EventSystem.current)
         {
-            if (touch.press.isPressed)
-            {
-                if (EventSystem.current.IsPointerOverGameObject(touch.touchId.ReadValue()))
-                {
-                    Debug.Log("Touching UI!");
-                    return true;
-                }
-            }
-        }
+            position = screenPosition
+        };
 
-       
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
 
-        return false;
+        return results.Count > 0;
+
     }
 }

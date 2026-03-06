@@ -1021,6 +1021,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "TouchDoubleTap",
+                    "type": "Button",
+                    "id": "fd50943b-3479-4591-8663-fea9c8b2ebe6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TouchDrag",
+                    "type": "Button",
+                    "id": "551beb19-d95a-4e65-b649-20369e00c825",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1054,6 +1072,28 @@
                     "processors": "",
                     "groups": ";Touch",
                     "action": "TouchHold",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7fdb1e5a-ad83-4cfe-a8b3-9c0a99921497",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "MultiTap",
+                    "processors": "",
+                    "groups": ";Touch",
+                    "action": "TouchDoubleTap",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "80e46ace-17ed-494e-a638-8b478626b85b",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TouchDrag",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
