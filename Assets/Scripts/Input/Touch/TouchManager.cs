@@ -30,9 +30,12 @@ public class TouchManager : MonoBehaviour
     public GameObject holdBubble;
 
     private bool isHolding = false;
+    private bool holdComplete = false;
 
-    private Vector3 touchedPosition;
+    private Vector3 tapPosition;
 
+    private float holdTimer;
+    private float holdDuration = 0.4f;
 
 
 
@@ -60,6 +63,7 @@ public class TouchManager : MonoBehaviour
         EnhancedTouchSupport.Enable();
         touchPressAction.performed += TouchPressed;
         touchPressAction.canceled += TouchReleased;
+        touchHoldAction.performed += PerformHold;
     }
 
     private void OnDisable()
@@ -67,6 +71,7 @@ public class TouchManager : MonoBehaviour
         EnhancedTouchSupport.Disable();
         touchPressAction.performed -= TouchPressed;
         touchPressAction.canceled -= TouchReleased;
+        touchHoldAction.performed -= PerformHold;
     }
 
     private void TouchPressed(InputAction.CallbackContext context)
@@ -93,14 +98,15 @@ public class TouchManager : MonoBehaviour
         }
 
         isHolding = true;
-        PlayAudio(lowPitch: true);
+        holdComplete = false;
+        //PlayAudio(lowPitch: true);
 
         //Vector2 touchPosition = touchPositionAction.ReadValue<Vector2>();
 
-        touchedPosition = new Vector3(touchPosition.x, touchPosition.y, 10f);
+        tapPosition = new Vector3(touchPosition.x, touchPosition.y, 10f);
 
-        touchedPosition = Camera.main.ScreenToWorldPoint(touchedPosition);
-        touchedPosition.z = 0f;
+        tapPosition = Camera.main.ScreenToWorldPoint(tapPosition);
+        tapPosition.z = 0f;
 
 
         //circle.transform.position = position;
@@ -109,12 +115,37 @@ public class TouchManager : MonoBehaviour
         
         //SpawnHoldBubble(position);
         
-        SpawnLavaBubbles(touchedPosition);
+        //SpawnLavaBubbles(tapPosition);
         
+    }
+
+    private void PerformHold(InputAction.CallbackContext context)
+    {
+        if (IsTouchingUI(touchPositionAction.ReadValue<Vector2>()))
+        {
+            return;
+        }
+
+        if (audioRecorder.isRecording) 
+        {
+            return;
+        }
+
+        holdComplete = true;
+        SpawnHoldBubble(tapPosition);
+        PlayAudio(lowPitch: true);
     }
 
     private void TouchReleased(InputAction.CallbackContext context)
     {
+
+        if (isHolding && !holdComplete)
+        {
+            SpawnLavaBubbles(tapPosition);
+            PlayAudio(lowPitch: true);
+        }
+
+        holdComplete = false;
         isHolding = false;
         if (audioSource.clip != null)
         {
