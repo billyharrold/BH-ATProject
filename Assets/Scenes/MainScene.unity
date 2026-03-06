@@ -299,6 +299,7 @@ MonoBehaviour:
   audioSource: {fileID: 139788885}
   audioRecorder: {fileID: 139788884}
   lavaBubbles: {fileID: 4542580247919651145, guid: c8c3ff154fd8b394fa7d4a350d7202fa, type: 3}
+  holdBubble: {fileID: 4132423193143087216, guid: b6ed2c5ae8012e54e8f90a761dc236f9, type: 3}
 --- !u!114 &239870826
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -25,9 +25,13 @@ public class TouchManager : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     public AudioRecorder audioRecorder;
 
-    [Header("Spawnables")] public GameObject lavaBubbles;
+    [Header("Spawnables")] 
+    public GameObject lavaBubbles;
+    public GameObject holdBubble;
 
     private bool isHolding = false;
+
+    private Vector3 touchedPosition;
 
 
 
@@ -93,17 +97,20 @@ public class TouchManager : MonoBehaviour
 
         //Vector2 touchPosition = touchPositionAction.ReadValue<Vector2>();
 
-        Vector3 position = new Vector3(touchPosition.x, touchPosition.y, 10f);
+        touchedPosition = new Vector3(touchPosition.x, touchPosition.y, 10f);
 
-        position = Camera.main.ScreenToWorldPoint(position);
-        position.z = 0f;
+        touchedPosition = Camera.main.ScreenToWorldPoint(touchedPosition);
+        touchedPosition.z = 0f;
 
 
         //circle.transform.position = position;
 
 
-        SpawnLavaBubbles(position);
-
+        
+        //SpawnHoldBubble(position);
+        
+        SpawnLavaBubbles(touchedPosition);
+        
     }
 
     private void TouchReleased(InputAction.CallbackContext context)
@@ -124,13 +131,21 @@ public class TouchManager : MonoBehaviour
             return;
         }
 
+
         audioSource.pitch = lowPitch ? 0.8f : 1f;
         audioSource.Play();
+
     }
 
     private void SpawnLavaBubbles(Vector3 position)
     {
         Instantiate(lavaBubbles, position, Quaternion.identity);
+    }
+
+    private void SpawnHoldBubble(Vector3 position)
+    {
+        Instantiate(holdBubble, position, Quaternion.identity);
+        
     }
 
     private bool IsTouchingUI(Vector2 screenPosition)

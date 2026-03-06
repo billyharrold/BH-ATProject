@@ -24,7 +24,7 @@ public class Bubble : MonoBehaviour
     private bool isActive;
     private float radius;
 
-    private float repulseForce = 0.5f;
+    [SerializeField] private float repulseForce = 0.5f;
 
     public static List<Bubble> activeBubbles = new List<Bubble>();
 
