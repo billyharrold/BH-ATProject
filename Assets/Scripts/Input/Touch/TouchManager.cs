@@ -120,7 +120,7 @@ public class TouchManager : MonoBehaviour
 
         if (audioSource == null || audioSource.clip == null)
         {
-            Debug.LogWarning("AudioSource or clip is missing");
+            Debug.LogWarning("Audio clip missing");
             return;
         }
 

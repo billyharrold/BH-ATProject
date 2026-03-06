@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 4745030737831211968}
   - component: {fileID: 3764705075610509886}
   - component: {fileID: 4076343238183798644}
-  - component: {fileID: -5018851914215074050}
   - component: {fileID: -8646425012242856112}
+  - component: {fileID: 5959257009484669938}
   m_Layer: 0
   m_Name: CirclePhysicMove
   m_TagString: Bubble
@@ -117,20 +117,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-5018851914215074050
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4542580247919651145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c3a4e5097cc6d540a108e11d02b3315, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  driftStrength: 9.2
-  riseSpeed: 2
 --- !u!58 &-8646425012242856112
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -167,3 +153,61 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.54
+--- !u!114 &5959257009484669938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4542580247919651145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f7fe8a6a59e0854496c62aec2236595, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  driftStrength: 1
+  spawnCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: -0.0016420361
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5000793
+      value: 1.197071
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.7522875
+      value: 0.94974345
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.99903935
+      value: 1.000114
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spawnMinTime: 1
+  spawnMaxTime: 2
