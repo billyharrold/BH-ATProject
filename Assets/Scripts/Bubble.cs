@@ -22,6 +22,9 @@ public class Bubble : MonoBehaviour
     private float offset;
     private Vector3 prefabScale;
     private bool isActive;
+    private float radius;
+
+    private float repulseForce = 0.5f;
 
     public static List<Bubble> activeBubbles = new List<Bubble>();
 
@@ -29,6 +32,7 @@ public class Bubble : MonoBehaviour
     {
         offset = Random.Range(0f, 100f);
         prefabScale = transform.localScale;
+        radius = prefabScale.x / 2f;
         transform.localScale = Vector3.zero;
     }
 
@@ -57,6 +61,7 @@ public class Bubble : MonoBehaviour
         }
 
         MoveBubble();
+        BubbleCollision();
     }
 
     private IEnumerator SpawnBubble(float duration)
@@ -87,5 +92,28 @@ public class Bubble : MonoBehaviour
         Vector2 direction = new Vector2(noiseX * 2f - 1f, noiseY * 2f - 1f);
 
         transform.Translate(speed * Time.deltaTime * direction);
+    }
+
+    private void BubbleCollision()
+    {
+        foreach (Bubble other in activeBubbles)
+        {
+            if (other == this)
+            {
+                continue;
+            }
+
+            Vector2 differenceDistance = transform.position - other.transform.position;
+            float distance = differenceDistance.magnitude;
+
+            float total = radius + other.radius;
+
+            if (distance < total && distance > 0.1f)
+            {
+                float overlap = total - distance;
+                transform.Translate(differenceDistance.normalized * overlap * repulseForce * Time.deltaTime);
+            }
+
+        }
     }
 }
