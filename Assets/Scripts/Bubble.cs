@@ -71,9 +71,8 @@ public class Bubble : MonoBehaviour
             return;
         }
 
-        bubbleMat.SetVector("_Scale", new Vector2(transform.localScale.x, transform.localScale.y));
-        bubbleMat.SetColor("_Colour", Color.dodgerBlue);
-
+        //bubbleMat.SetVector("_Scale", new Vector2(transform.localScale.x, transform.localScale.y));
+        
         MoveBubble();
         BubbleCollision();
         WallCollisions();
