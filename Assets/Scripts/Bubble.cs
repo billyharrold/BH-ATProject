@@ -80,6 +80,7 @@ public class Bubble : MonoBehaviour
         lifeTimer += Time.fixedDeltaTime;
         if (lifeTimer >= bubbleLifespan)
         {
+            StartCoroutine(PopBubble(spawnMinTime));
             Destroy(gameObject);
         }
     }
@@ -116,6 +117,20 @@ public class Bubble : MonoBehaviour
             float time = Mathf.Clamp01(elapsedTime / duration);
             float scale = spawnCurve.Evaluate(time);
             transform.localScale = prefabScale * scale;
+            yield return null;
+        }
+    }
+
+    private IEnumerator PopBubble(float duration)
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float time = Mathf.Clamp01(elapsedTime / duration);
+            float scale = spawnCurve.Evaluate(time);
+            transform.localScale = prefabScale * -1f;
             yield return null;
         }
     }
