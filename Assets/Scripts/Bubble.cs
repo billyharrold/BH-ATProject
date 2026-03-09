@@ -26,10 +26,21 @@ public class Bubble : MonoBehaviour
 
     [SerializeField] private float repulseForce = 0.5f;
 
+
+    private Material bubbleMat;
+
+
     public static List<Bubble> activeBubbles = new List<Bubble>();
 
     private void Awake()
     {
+        bubbleMat = GetComponent<SpriteRenderer>().material;
+
+        if (bubbleMat == null)
+        {
+            Debug.LogError("Bubble material not found!");
+        }
+
         offset = Random.Range(0f, 100f);
         prefabScale = transform.localScale;
         radius = prefabScale.x / 2f;
@@ -59,6 +70,9 @@ public class Bubble : MonoBehaviour
         {
             return;
         }
+
+        bubbleMat.SetVector("_Scale", new Vector2(transform.localScale.x, transform.localScale.y));
+        bubbleMat.SetColor("_Colour", Color.dodgerBlue);
 
         MoveBubble();
         BubbleCollision();
