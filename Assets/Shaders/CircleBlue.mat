@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CircleMat
+  m_Name: CircleBlue
   m_Shader: {fileID: -6465566751694194690, guid: 23f25fc4a81b9884d8f565baf9dc54fa, type: 3}
   m_Parent: {fileID: -876546973899608171, guid: 23f25fc4a81b9884d8f565baf9dc54fa, type: 3}
   m_ModifiedSerializedProperties: 0
