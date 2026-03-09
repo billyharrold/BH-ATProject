@@ -62,15 +62,16 @@ public class Bubble : MonoBehaviour
 
         MoveBubble();
         BubbleCollision();
+        WallCollisions();
     }
 
     private IEnumerator SpawnBubble(float duration)
     {
-        yield return inflateBubble(duration);
+        yield return InflateBubble(duration);
         isActive = true;
     }
 
-    private IEnumerator inflateBubble(float duration)
+    private IEnumerator InflateBubble(float duration)
     {
         float elapsedTime = 0f;
 
@@ -115,5 +116,38 @@ public class Bubble : MonoBehaviour
             }
 
         }
+    }
+
+    private void WallCollisions()
+    {
+        Vector2 position = transform.position;
+        Vector2 pushDirection = Vector2.zero;
+
+        float wallMargin = 0.5f;
+        float pushStrength = 5f;
+
+        float height = Camera.main.orthographicSize;
+        float width = height * Camera.main.aspect;
+
+        if (position.x < -width + wallMargin)
+        {
+            pushDirection.x = pushStrength;
+        }
+        else if (position.x > width - wallMargin)
+        {
+            pushDirection.x = -pushStrength;
+        }
+
+        if (position.y < -height + wallMargin)
+        {
+            pushDirection.y = pushStrength;
+        }
+        else if (position.y > height - wallMargin)
+        {
+            pushDirection.y = -pushStrength;
+        }
+
+        transform.Translate(pushDirection * Time.deltaTime);
+
     }
 }
