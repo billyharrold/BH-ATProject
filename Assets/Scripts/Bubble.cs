@@ -26,6 +26,9 @@ public class Bubble : MonoBehaviour
 
     [SerializeField] private float repulseForce = 0.5f;
 
+    [SerializeField] float shimmerSpeed = 0.3f;
+    [SerializeField] float shimmerIntensity = 0.05f;
+
 
     private Material bubbleMat;
 
@@ -76,6 +79,7 @@ public class Bubble : MonoBehaviour
         MoveBubble();
         BubbleCollision();
         WallCollisions();
+        ShimmerBubble();
     }
 
     private IEnumerator SpawnBubble(float duration)
@@ -162,5 +166,11 @@ public class Bubble : MonoBehaviour
 
         transform.Translate(pushDirection * Time.deltaTime);
 
+    }
+
+    private void ShimmerBubble()
+    {
+        float shimmer = 1.0f + Mathf.Sin(Time.time * shimmerSpeed + offset) * shimmerIntensity;
+        transform.localScale = prefabScale * shimmer;
     }
 }
