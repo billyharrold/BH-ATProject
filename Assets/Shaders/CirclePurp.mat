@@ -64,7 +64,7 @@ Material:
     - _Softness: 0.1
     - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 0.5114962, g: 0.3252047, b: 0.7924528, a: 1}
+    - _Color: {r: 0.023529414, g: 0.32941177, b: 0.6901961, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _Scale: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []

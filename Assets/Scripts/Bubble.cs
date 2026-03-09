@@ -29,6 +29,9 @@ public class Bubble : MonoBehaviour
     [SerializeField] float shimmerSpeed = 0.3f;
     [SerializeField] float shimmerIntensity = 0.05f;
 
+    [SerializeField] private float bubbleLifespan = 20f;
+    private float lifeTimer;
+
 
     private Material bubbleMat;
 
@@ -67,6 +70,20 @@ public class Bubble : MonoBehaviour
         StartCoroutine(SpawnBubble(spawnTime));
     }
 
+    private void FixedUpdate()
+    {
+        if (!isActive)
+        {
+            return;
+        }
+
+        lifeTimer += Time.fixedDeltaTime;
+        if (lifeTimer >= bubbleLifespan)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Update()
     {
         if (!isActive)
@@ -75,17 +92,18 @@ public class Bubble : MonoBehaviour
         }
 
         //bubbleMat.SetVector("_Scale", new Vector2(transform.localScale.x, transform.localScale.y));
-        
+        ShimmerBubble();
         MoveBubble();
         BubbleCollision();
         WallCollisions();
-        ShimmerBubble();
+        
     }
 
     private IEnumerator SpawnBubble(float duration)
     {
         yield return InflateBubble(duration);
         isActive = true;
+        //ShimmerBubble();
     }
 
     private IEnumerator InflateBubble(float duration)
@@ -101,6 +119,8 @@ public class Bubble : MonoBehaviour
             yield return null;
         }
     }
+
+   
 
     private void MoveBubble()
     {

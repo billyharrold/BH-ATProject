@@ -200,3 +200,5 @@ MonoBehaviour:
   spawnMinTime: 1
   spawnMaxTime: 2
   repulseForce: 2
+  shimmerSpeed: 0.3
+  shimmerIntensity: 0.1
