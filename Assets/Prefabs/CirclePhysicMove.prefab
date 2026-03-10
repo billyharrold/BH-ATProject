@@ -185,9 +185,9 @@ MonoBehaviour:
   spawnMinTime: 1
   spawnMaxTime: 2
   repulseForce: 2
-  shimmerSpeed: 0.07
+  shimmerSpeed: 0.5
   shimmerIntensity: 0.1
-  bubbleLifespan: 5
+  bubbleLifespan: 10
 --- !u!114 &4937919565339305996
 MonoBehaviour:
   m_ObjectHideFlags: 0
