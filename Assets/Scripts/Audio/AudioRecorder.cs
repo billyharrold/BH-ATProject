@@ -1,8 +1,12 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
-using UnityEngine.InputSystem.HID;
 using UnityEngine.UI;
+
+
+#if UNITY_ANDROID
+using UnityEngine.Android;
+#endif
 
 public class AudioRecorder : MonoBehaviour
 {
@@ -35,13 +39,32 @@ public class AudioRecorder : MonoBehaviour
         {
             return;
         }
-
         StartCoroutine(RecordAudio());
-
     }
 
     private IEnumerator RecordAudio()
     {
+        // permission checks for android
+        #if UNITY_ANDROID
+        if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
+        {
+            Permission.RequestUserPermission(Permission.Microphone);
+            yield return new WaitForSeconds(1f);
+        }
+
+        if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
+        {
+            Debug.LogError("Microphone permission denied");
+            yield break;
+        }
+        #endif
+
+        if (Microphone.devices.Length == 0)
+        {
+            Debug.Log("No microphone found");
+        }
+
+
         isRecording = true;
         //Debug.Log(isRecording);
         recordButton.image.color = Color.red;
@@ -61,7 +84,24 @@ public class AudioRecorder : MonoBehaviour
         recordButton.image.color = new Color(0.84f, 0.3f, 0.3f, 1);
     }
 
+
+
+
+
+
+
+
+
+
+
     // Debug now I've condensed down the functions to 1 button
+   
+    
+    
+    
+    
+    
+    
     public void StopRecording()
     {
         Debug.Log("Recording stopped");
