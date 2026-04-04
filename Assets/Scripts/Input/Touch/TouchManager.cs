@@ -140,6 +140,13 @@ public class TouchManager : MonoBehaviour
 
     private void PerformHold(InputAction.CallbackContext context)
     {
+        if (singleTapped != null)
+        {
+            StopCoroutine(singleTapped);
+            singleTapped = null;
+        }
+
+
         if (IsTouchingUI(touchPositionAction.ReadValue<Vector2>()))
         {
             return;
@@ -180,7 +187,7 @@ public class TouchManager : MonoBehaviour
         yield return new WaitForSeconds(dblTapThreshold + 0.05f);
 
         SpawnLavaBubbles(tapPosition);
-        PlayAudio(lowPitch: true);
+        PlayAudio(lowPitch: false);
     }
 
 
@@ -216,10 +223,10 @@ public class TouchManager : MonoBehaviour
         }
 
         SpawnDBLTapBubble(tapPosition);
-        PlayAudio(lowPitch: false);
+        PlayAudio(highPitch: true);
     }
 
-    private void PlayAudio(bool lowPitch = false)
+    private void PlayAudio(bool lowPitch = false, bool highPitch = false)
     {
 
         if (audioSource == null || audioSource.clip == null)
@@ -229,7 +236,20 @@ public class TouchManager : MonoBehaviour
         }
 
 
-        audioSource.pitch = lowPitch ? 0.8f : 1f;
+        if (highPitch)
+        {
+            audioSource.pitch = 1.7f;
+        }
+        else if (lowPitch)
+        {
+            audioSource.pitch = 0.8f;
+        }
+        else
+        {
+            audioSource.pitch = 1f;
+        }
+
+        //audioSource.pitch = lowPitch ? 0.8f : 1f;
         audioSource.Play();
 
     }
