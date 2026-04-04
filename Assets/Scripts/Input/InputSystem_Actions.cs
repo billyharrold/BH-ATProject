@@ -1165,7 +1165,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""7fdb1e5a-ad83-4cfe-a8b3-9c0a99921497"",
                     ""path"": ""<Touchscreen>/Press"",
-                    ""interactions"": ""MultiTap"",
+                    ""interactions"": ""MultiTap(tapDelay=0.3)"",
                     ""processors"": """",
                     ""groups"": "";Touch"",
                     ""action"": ""TouchDoubleTap"",

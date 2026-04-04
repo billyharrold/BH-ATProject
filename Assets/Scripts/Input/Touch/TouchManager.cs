@@ -4,8 +4,12 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine.InputSystem.EnhancedTouch;
+using Quaternion = UnityEngine.Quaternion;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 
 public class TouchManager : MonoBehaviour
@@ -28,14 +32,21 @@ public class TouchManager : MonoBehaviour
     [Header("Spawnables")] 
     public GameObject lavaBubbles;
     public GameObject holdBubble;
+    public GameObject doubleTapBubble;
 
     private bool isHolding = false;
     private bool holdComplete = false;
 
     private Vector3 tapPosition;
 
+
+    // Hold checks
     private float holdTimer;
     private float holdDuration = 0.4f;
+
+    // Double tap checks
+    private float lastTap = 0f;
+    private float dblTapThreshold = 0.3f;
 
 
 
@@ -64,6 +75,7 @@ public class TouchManager : MonoBehaviour
         touchPressAction.performed += TouchPressed;
         touchPressAction.canceled += TouchReleased;
         touchHoldAction.performed += PerformHold;
+        //touchDoubleTap.performed += PerformDoubleTap;
     }
 
     private void OnDisable()
@@ -72,6 +84,7 @@ public class TouchManager : MonoBehaviour
         touchPressAction.performed -= TouchPressed;
         touchPressAction.canceled -= TouchReleased;
         touchHoldAction.performed -= PerformHold;
+       // touchDoubleTap.performed -= PerformDoubleTap;
     }
 
     private void TouchPressed(InputAction.CallbackContext context)
@@ -96,6 +109,14 @@ public class TouchManager : MonoBehaviour
         {
             return;
         }
+
+        //if (Time.time - lastTap < dblTapThreshold)
+        //{
+        //    lastTap = 0f;
+        //    return;
+        //}
+
+        //lastTap = Time.time;
 
         isHolding = true;
         holdComplete = false;
@@ -135,6 +156,32 @@ public class TouchManager : MonoBehaviour
         SpawnHoldBubble(tapPosition);
         PlayAudio(lowPitch: true);
     }
+
+    //private void PerformDoubleTap(InputAction.CallbackContext context)
+    //{
+    //    Vector2 touchPosition = Vector2.zero;
+    //    if (Touch.activeTouches.Count > 0)
+    //    {
+    //        touchPosition = Touch.activeTouches[0].screenPosition;
+    //    }
+    //    else
+    //    {
+    //        touchPosition = touchPositionAction.ReadValue<Vector2>();
+    //    }
+
+    //    if (IsTouchingUI(touchPosition))
+    //    {
+    //        return;
+    //    }
+
+    //    if (audioRecorder.isRecording)
+    //    {
+    //        return;
+    //    }
+
+    //    SpawnDBLTapBubble(tapPosition);
+    //    PlayAudio(lowPitch: false);
+    //}
 
     private void TouchReleased(InputAction.CallbackContext context)
     {
@@ -177,6 +224,11 @@ public class TouchManager : MonoBehaviour
     {
         Instantiate(holdBubble, position, Quaternion.identity);
         
+    }
+
+    private void SpawnDBLTapBubble(Vector3 position)
+    {
+        Instantiate(doubleTapBubble, position, Quaternion.identity);
     }
 
     private bool IsTouchingUI(Vector2 screenPosition)
