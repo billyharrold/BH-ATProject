@@ -7,6 +7,10 @@ public class UIController : MonoBehaviour
 
     public GameObject talkPanel;
 
+    public GameObject helpPanel;
+
+    private bool isPanelActive = false;
+
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -22,6 +26,7 @@ public class UIController : MonoBehaviour
     void Start()
     {
         CheckUI();
+        helpPanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -40,5 +45,17 @@ public class UIController : MonoBehaviour
         {
             talkPanel.SetActive(false);
         }
+    }
+
+
+    public void ShowPanel()
+    {
+        helpPanel.SetActive(true);
+        talkPanel.SetActive(false);
+    }
+
+    public void HidePanel()
+    {
+        helpPanel.SetActive(false);
     }
 }

@@ -61,7 +61,7 @@ Material:
     - _EnableExternalAlpha: 0
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Softness: 0.72
+    - _Softness: 0.66
     - _XRMotionVectorsPass: 1
     - _ZWrite: 0
     m_Colors:
